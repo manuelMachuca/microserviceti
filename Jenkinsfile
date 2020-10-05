@@ -6,6 +6,10 @@ pipeline {
 
       stage('Build') {
 
+         environment {
+            HOME = "."
+         }
+
          steps {
 
             // Get some code from a GitHub repository
