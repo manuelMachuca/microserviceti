@@ -10,12 +10,13 @@ pipeline {
 
             // Get some code from a GitHub repository
 
-            git 'https://github.com/manuelMachuca/microserviceti.git'
+            //git 'https://github.com/manuelMachuca/microserviceti.git'
 
             // Run Maven on a Unix agent.
 
             //sh "./mvnw -Dmaven.test.failure.ignore=true clean package"
-            sh "./mvnw clean install"
+            sh "mvn -version"
+            sh "mvn clean install"
 
 
             // To run Maven on a Windows agent, use
