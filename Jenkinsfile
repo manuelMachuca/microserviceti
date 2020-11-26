@@ -10,42 +10,22 @@ pipeline {
             HOME = "."
          }
 
-         steps {
+         withMaven(
+        // Maven installation declared in the Jenkins "Global Tool Configuration"
+        maven: 'maven-3', // (1)
+        // Use `$WORKSPACE/.repository` for local repository folder to avoid shared repositories
+        mavenLocalRepo: '.repository', // (2)
+        // Maven settings.xml file defined with the Jenkins Config File Provider Plugin
+        // We recommend to define Maven settings.xml globally at the folder level using
+        // navigating to the folder configuration in the section "Pipeline Maven Configuration / Override global Maven configuration"
+        // or globally to the entire master navigating to  "Manage Jenkins / Global Tools Configuration"
+        mavenSettingsConfig: 'my-maven-settings' // (3)
+    ) {
 
-            // Get some code from a GitHub repository
+      // Run the maven build
+      sh "mvn clean verify"
 
-            //git 'https://github.com/manuelMachuca/microserviceti.git'
-
-            // Run Maven on a Unix agent.
-
-            //sh "./mvnw -Dmaven.test.failure.ignore=true clean package"
-            //sh "./mvnw -version"
-            //sh "./mvnw clean install"
-            sh "./mvnw clean verify"
-
-         
-            // To run Maven on a Windows agent, use
-
-            // bat "mvn -Dmaven.test.failure.ignore=true clean package"
-
-         }
-
-
-         post {
-
-            // If Maven was able to run the tests, even if some of the test
-
-            // failed, record the test results and archive the jar file.
-
-            success {
-
-               junit '**/target/surefire-reports/TEST-*.xml'
-
-               archiveArtifacts 'target/*.jar'
-
-            }
-
-         }
+    } 
 
       }
 
