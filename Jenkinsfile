@@ -21,7 +21,7 @@ pipeline {
             //sh "./mvnw -Dmaven.test.failure.ignore=true clean package"
             //sh "./mvnw -version"
             //sh "./mvnw clean install"
-            sh "mvn clean verify"
+            sh "./mvn clean verify"
 
          
             // To run Maven on a Windows agent, use
