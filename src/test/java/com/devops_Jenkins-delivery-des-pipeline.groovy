@@ -1,13 +1,11 @@
-@Library('jenkins-sharedlib@master')
-import sharedlib.JenkinsfileUtil
-
-def utils = new JenkinsfileUtil(steps, this)
-
 try {
   node() {
 
     stage('Build & U.Test') { 
-		utils.buildMaven("-U", true) 
+		git url: 'https://github.com/manuelMachuca/microserviceti'
+    withMaven {
+      sh "mvn clean verify"
+    } // withMaven will discover the generated Maven artifacts, JUnit Surefire & FailSafe reports and FindBugs r
 	
 	  }
     stage('QA Analisys') { 
